@@ -15,5 +15,5 @@ void Mcp4921::write_raw_u12(uint16_t value) {
 }  
 
 void Mcp4921::write_u16(uint16_t value) {
-  write_raw_u12(value / 16);
+  write_raw_u12((uint32_t)value * 4095 / 65535);
 }

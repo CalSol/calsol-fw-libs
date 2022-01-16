@@ -20,5 +20,5 @@ uint16_t Mcp3201::read_raw_u12() {
 
 // reads ADC scaled up to a 16-bit value
 uint16_t Mcp3201::read_u16() {
-  return read_raw_u12() * 16;
+  return (uint32_t)read_raw_u12() * 65535 / 4095;
 }
