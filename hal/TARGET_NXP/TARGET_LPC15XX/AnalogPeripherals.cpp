@@ -1,3 +1,5 @@
+#ifdef TARGET_LPC15XX
+
 #include "AnalogPeripherals.h"
 
 #include "analogin_api.h"
@@ -83,3 +85,5 @@ unsigned short TempSensor::read_u16() {
   LPC_ADC0->INSEL = ADCn_INSEL_ADC;
   return readOut;
 }
+
+#endif

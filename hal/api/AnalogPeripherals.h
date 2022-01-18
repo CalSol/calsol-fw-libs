@@ -1,3 +1,4 @@
+#ifdef TARGET_LPC15XX
 #ifndef _ANALOGPERIPHERALS_H_
 #define _ANALOGPERIPHERALS_H_
 
@@ -28,4 +29,5 @@ protected:
     analogin_t _adc;
 };
 
+#endif
 #endif

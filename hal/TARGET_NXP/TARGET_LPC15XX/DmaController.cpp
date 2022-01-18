@@ -1,3 +1,5 @@
+#ifdef TARGET_LPC15XX
+
 #include "DmaController.h"
 
 uint32_t DmaController::dmaDescriptors_[18][4] __attribute__((aligned(512)));
@@ -63,3 +65,5 @@ void DmaController::irqHandler() {
     }
   }
 }
+
+#endif

@@ -1,3 +1,4 @@
+#ifdef TARGET_LPC15XX
 #ifndef __EEPROM_H_
 #define __EEPROM_H_
 
@@ -19,4 +20,5 @@ namespace EEPROM {
 
 }
 
+#endif
 #endif

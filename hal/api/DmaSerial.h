@@ -1,3 +1,4 @@
+#ifdef TARGET_LPC15XX
 #ifndef _DMA_SERIAL_H_
 #define _DMA_SERIAL_H_
 
@@ -48,4 +49,5 @@ protected:
   uint8_t buffer_[N];
 };
 
+#endif
 #endif

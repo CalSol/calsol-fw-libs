@@ -3,6 +3,7 @@
  *
  * Watchdog timer implementation
  */
+#ifdef TARGET_LPC15XX
 #ifndef __WDT_H__
 #define __WDT_H__
 
@@ -39,3 +40,4 @@ class WDT {
 };
 
 #endif /* __WDT_H__*/
+#endif
