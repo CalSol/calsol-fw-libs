@@ -1,3 +1,5 @@
+#ifdef TARGET_LPC15XX
+
 #include <EEPROM.h>
 
 void EEPROM::init() {
@@ -30,3 +32,5 @@ void EEPROM::read(uint32_t address, uint8_t *data, uint32_t bytes) {
 
     iap_entry(command_param, status_result);
 }
+
+#endif

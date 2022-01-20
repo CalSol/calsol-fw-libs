@@ -1,3 +1,5 @@
+#ifndef NONDEFAULT_DEBUG_CONSOLE
+
 #include "mbed.h"
 #include "DmaSerial.h"
 
@@ -15,3 +17,5 @@ void puts(const char* string) {
 }
 
 }}
+
+#endif

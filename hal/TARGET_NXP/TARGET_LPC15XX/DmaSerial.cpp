@@ -1,3 +1,5 @@
+#ifdef TARGET_LPC15XX
+
 #include "DmaSerial.h"
 
 DmaSerialBase::DmaSerialBase(PinName tx, PinName rx, int baud, uint8_t* bufferBegin, uint8_t* bufferEnd) :
@@ -125,3 +127,4 @@ void DmaSerialBase::irqTransferDone() {
   }
 }
 
+#endif

@@ -1,3 +1,4 @@
+#ifdef TARGET_LPC15XX
 #ifndef _DMA_CONTROLLER_H_
 #define _DMA_CONTROLLER_H_
 
@@ -54,4 +55,5 @@ protected:
   static Callback<void()> dmaCallbacks_[kNumDmaChannels];
 };
 
+#endif
 #endif
