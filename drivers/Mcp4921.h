@@ -7,7 +7,7 @@
 // MCP4921 12-bit SPI DAC
 class Mcp4921 {
 public:
-  Mcp4921(SPI& spi, DigitalOut& cs);
+  Mcp4921(SPI& spi, DigitalOut& cs, int frequency = 1000000);
 
   // writes a 12-bit value to the DAC
   // LDAC must be set externally
@@ -18,6 +18,7 @@ public:
 protected:
   SPI& spi_;
   DigitalOut& cs_;
+  int frequency_;
 };
 
 #endif  // __MCP4921_H__

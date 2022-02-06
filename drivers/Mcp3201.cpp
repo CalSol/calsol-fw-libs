@@ -1,7 +1,7 @@
 #include "Mcp3201.h"
 
 
-Mcp3201::Mcp3201(SPI& spi, DigitalOut& cs) : spi_(spi), cs_(cs) {
+Mcp3201::Mcp3201(SPI& spi, DigitalOut& cs, int frequency) : spi_(spi), cs_(cs), frequency_(frequency) {
   cs_ = 1;
 }
 
@@ -9,6 +9,7 @@ Mcp3201::Mcp3201(SPI& spi, DigitalOut& cs) : spi_(spi), cs_(cs) {
 // frequency must be set externally, which also determines the sample rate
 uint16_t Mcp3201::read_raw_u12() {
   spi_.format(8, 0);
+  spi_.frequency(frequency_);
   cs_ = 0;
   // first two clocks are for sampling, then one null bit, then data
   // and last bit (in a 16 bit transfer) is unused
