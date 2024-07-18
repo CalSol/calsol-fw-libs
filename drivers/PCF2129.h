@@ -15,17 +15,25 @@
 class PCF2129 {
 
 private:
-    SPI& RTC_spi;           // Pointer to SPI object that the RTC is connected to
-    DigitalOut& RTC_cs;     // Pointer to Digital Out object that the RTC CS is connected to
+    I2C* RTC_i2c;           // Pointer to I2C object that the RTC is connected to
+    SPI* RTC_spi;           // Pointer to SPI object that the RTC is connected to
+    DigitalOut* RTC_cs;     // Pointer to Digital Out object that the RTC CS is connected to
 
 public:
 
     /** Constructor for PCF2129 object
      *
-     * @param s Reference to an SPI object connected to the RTC
-     * @param cs Reference to the DigitalOut object connected to the RTC CS pin
+     * @param s Pointer to an SPI object connected to the RTC
+     * @param cs Pointer to the DigitalOut object connected to the RTC CS pin
      */
-    PCF2129(SPI &s, DigitalOut &cs) : RTC_spi(s), RTC_cs(cs) {
+    PCF2129(SPI *s, DigitalOut *cs) : RTC_spi(s), RTC_cs(cs) {
+    }
+
+    /** Constructor for PCF2129 object
+     *
+     * @param s Pointer to an I2C object connected to the RTC
+     */
+    PCF2129(I2C *s) : RTC_i2c(s) {
     }
 
     /** Read the current time and put it in time.

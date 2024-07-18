@@ -19,18 +19,18 @@ static uint8_t bcdToInt(uint8_t in) {
 
 bool PCF2129::gettime(tm *time) {
     int command = 0b10100000;           //Read starting at the sec register
-    RTC_cs = 0;
+    *RTC_cs = 0;
     wait_us(1);
     /** Write in command, then read the registers holding the time componenets */
-    RTC_spi.write(command | 0x03);
-    uint8_t sec = RTC_spi.write(0x00);
-    uint8_t min = RTC_spi.write(0x00);
-    uint8_t hour = RTC_spi.write(0x00);
-    uint8_t day = RTC_spi.write(0x00);
-    uint8_t weekday = RTC_spi.write(0x00);
-    uint8_t month = RTC_spi.write(0x00);
-    uint8_t year = RTC_spi.write(0x00);
-    RTC_cs = 1;
+    RTC_spi->write(command | 0x03);
+    uint8_t sec = RTC_spi->write(0x00);
+    uint8_t min = RTC_spi->write(0x00);
+    uint8_t hour = RTC_spi->write(0x00);
+    uint8_t day = RTC_spi->write(0x00);
+    uint8_t weekday = RTC_spi->write(0x00);
+    uint8_t month = RTC_spi->write(0x00);
+    uint8_t year = RTC_spi->write(0x00);
+    *RTC_cs = 1;
 
     (void)(weekday);  // avoid unused variable warning
 
@@ -55,31 +55,31 @@ void PCF2129::settime(const tm &time) {
     uint8_t year = intToBcd(time.tm_year);
 
     /** Write this out to the RTC */
-    RTC_cs = 0;
+    *RTC_cs = 0;
     wait_us(1);
-    RTC_spi.write(command | 0x03);
-    RTC_spi.write(sec);
-    RTC_spi.write(min);
-    RTC_spi.write(hour);
-    RTC_spi.write(day);
-    RTC_spi.write(0);
-    RTC_spi.write(month);
-    RTC_spi.write(year);
-    RTC_cs = 1;
+    RTC_spi->write(command | 0x03);
+    RTC_spi->write(sec);
+    RTC_spi->write(min);
+    RTC_spi->write(hour);
+    RTC_spi->write(day);
+    RTC_spi->write(0);
+    RTC_spi->write(month);
+    RTC_spi->write(year);
+    *RTC_cs = 1;
 }
 
 void PCF2129::enable_s_int() {
     /** Set the configuration to enable the second interrupt */
     int command = 0b00100000;
-    RTC_cs=0;
+    *RTC_cs=0;
     wait_us(1);
-    RTC_spi.write(command | 0x10);
-    RTC_spi.write(1<<5);
-    RTC_cs=1;
+    RTC_spi->write(command | 0x10);
+    RTC_spi->write(1<<5);
+    *RTC_cs=1;
     wait_us(5);
-    RTC_cs=0;
+    *RTC_cs=0;
     wait_us(1);
-    RTC_spi.write(command | 0x00);
-    RTC_spi.write(0x01);
-    RTC_cs=1;
+    RTC_spi->write(command | 0x00);
+    RTC_spi->write(0x01);
+    *RTC_cs=1;
 }
