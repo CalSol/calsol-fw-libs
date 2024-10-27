@@ -12,29 +12,9 @@
 #include <time.h>
 
 /** Class abstraction for the PCF2129 */
-class PCF2129 {
-
-private:
-    I2C* RTC_i2c;           // Pointer to I2C object that the RTC is connected to
-    SPI* RTC_spi;           // Pointer to SPI object that the RTC is connected to
-    DigitalOut* RTC_cs;     // Pointer to Digital Out object that the RTC CS is connected to
+class PCF2129_Base {
 
 public:
-
-    /** Constructor for PCF2129 object
-     *
-     * @param s Pointer to an SPI object connected to the RTC
-     * @param cs Pointer to the DigitalOut object connected to the RTC CS pin
-     */
-    PCF2129(SPI *s, DigitalOut *cs) : RTC_spi(s), RTC_cs(cs) {
-    }
-
-    /** Constructor for PCF2129 object
-     *
-     * @param s Pointer to an I2C object connected to the RTC
-     */
-    PCF2129(I2C *s) : RTC_i2c(s) {
-    }
 
     /** Read the current time and put it in time.
      * RTC MUST BE SET IN 24 HOUR MODE, not 12 hour AM/PM mode.
@@ -43,20 +23,49 @@ public:
      *
      * @return if the oscillator hasn't stopped (if the OSF bit is clear)
      */
-    bool gettime(tm *time);
+    virtual bool gettime(tm *time);
 
     /** Set the time on the RTC from the datetime object
      * RTC MUST BE SET IN 24 HOUR MODE, not 12 hour AM/PM mode.
      *
      * @param time Time to set
      */
-    void settime(const tm& time);
+    virtual void settime(const tm& time);
 
-    /** Enable the second interrupt
-     * The INT pin will go HIGH on every second and will attach
-     */
-    void enable_s_int();
+    
+};
 
+class PCF2129_I2C : public PCF2129_Base {
+	private:
+		I2C* RTC_i2c;           // Pointer to I2C object that the RTC is connected to
+
+    public:
+
+        /** Constructor for PCF2129_I2C object
+         *
+         * @param r_i2c Reference to an I2C object connected to the RTC
+         */
+        PCF2129_I2C(I2C *r_i2c) : RTC_i2c(r_i2c) {
+        }
+        
+        bool gettime(tm *time);
+        void settime(const tm& time);
+        uint8_t read_i2c_reg(uint8_t base);
+};
+
+
+class PCF2129_SPI : public PCF2129_Base {
+	private:
+		SPI* RTC_spi;           // Pointer to SPI object that the RTC is connected to
+		DigitalOut* RTC_cs;     // Pointer to the DigitalOut object connected to the RTC CS pin
+    
+        /** Enable the second interrupt
+         * The INT pin will go HIGH on every second and will attach
+         */
+        void enable_s_int();
+    public:
+        bool gettime(tm *time);
+        void settime(const tm& time);
 };
 
 #endif // __PCF_2129_H__
